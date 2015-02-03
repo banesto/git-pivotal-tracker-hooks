@@ -6,16 +6,25 @@ require 'json'
 
 class GitLogs
   attr_accessor :raw_log, :commit_data
+
   def initialize
     self.raw_log = `git log --no-color --format='Commit: %h%nAuthor: %aN <%aE>%nMessage: %s%nRefs: %d' -1`.force_encoding('utf-8')
+
+    # Example git formatted log output:
+    #
+    # Commit: 8872e8fe03a10238d7be84d78813874d79ce0c3d
+    # Author: John Doe <john.doe@unknown.com>
+    # Message: [#90743834] test new v5 hook addition
+    # Refs:  (HEAD, feature/hook-test)
+
     parse!
     self
   end
 
   def parse!
-    regexp  = /Commit:\ (.*)\nAuthor:\ (.*)\nMessage:\ (.*)\nRefs:\ (.*)/i
+    regexp  = /Commit:\ (.*)\nAuthor:\ (.*)\nMessage:\ (.*)\nRefs:\ \ \((.*)\)/i
     match   = raw_log.scan(regexp).flatten
-    self.commit_data = GitLog.new(match[0], match[1], match[2])
+    self.commit_data = GitLog.new(match[0], match[1], match[2], match[3])
   end
 
   def pivotal_sync!
@@ -24,11 +33,36 @@ class GitLogs
 end
 
 class GitLog
-  attr_accessor :hash, :author, :message
-  def initialize hash, author, message
+  attr_accessor :hash, :author, :message, :refs
+
+  def initialize hash, author, message, refs
     self.hash     = hash
     self.author   = author
+    self.refs     = refs
     self.message  = message
+
+    updated_message
+  end
+
+  def updated_message
+    return message if ids_from_refs.empty?
+
+    ids = ids_from_refs.join(' ')
+    self.message = if message.scan(/\[(.+)\]/).empty?
+      "[#{ids}] #{message}"
+    else
+      index = message.index('[') + 1
+      message.insert index, "#{ids} "
+    end
+  end
+
+  def ids_from_refs
+    ref_array = refs.split(',')
+    ref_array.inject([]) do |result, ref|
+      id = ref.scan(/\#(.\d+)\D/i).flatten
+      result << "##{id.first}" unless id.empty?
+      result
+    end.flatten
   end
 
   def to_json
@@ -43,7 +77,9 @@ end
 
 class Pivotal
   attr_accessor :git_log, :tracker_token
+
   BASE_URI = URI('https://www.pivotaltracker.com/')
+
   def initialize git_log
     self.git_log        = git_log
     self.tracker_token  = get_token
