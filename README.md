@@ -2,7 +2,7 @@
 
 ## Setup
 
-In order to use Git -> Pivotal Tracker integration, you have to obtain your Pivotal Tracker API token. It could be found on your Pivotal Tracker profile page at the very bottom. Once you have that, add it to you Git project:
+In order to use Git &#8614; Pivotal Tracker integration, you have to obtain your Pivotal Tracker API token. It could be found on your Pivotal Tracker profile page at the very bottom. Once you have that, add it to you Git project:
 
     git config pivotal.token {your-pivotal-tracker-token}
 
