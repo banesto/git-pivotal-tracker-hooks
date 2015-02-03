@@ -7,13 +7,13 @@ require 'json'
 class GitLogs
   attr_accessor :raw_log, :commit_data
   def initialize
-    self.raw_log = `git log --no-color --format=short -1`.force_encoding('utf-8')
+    self.raw_log = `git log --no-color --format='Commit: %H%nAuthor: %aN <%aE>%nMessage: %s%nRefs: %d' -1`.force_encoding('utf-8')
     parse!
     self
   end
 
   def parse!
-    regexp  = /commit\ (.*)\nAuthor:\ (.*)\n\n\s*(.*)/i
+    regexp  = /Commit:\ (.*)\nAuthor:\ (.*)\nMessage:\ (.*)\nRefs:\ (.*)/i
     match   = raw_log.scan(regexp).flatten
     self.commit_data = GitLog.new(match[0], match[1], match[2])
   end
