@@ -22,6 +22,10 @@ To automatically finish a story by using a commit message, include `fixed`, `com
 
 If you want to mark story as delivered, include `delivers` besides story ID.
 
+It is also possible to assign multiple stories to a commit:
+
+    [#12345677 #12345678] Ultimate bugfix
+
 More info can be found [here](https://www.pivotaltracker.com/help/api/rest/v5#Source_Commits)
 
 ## Credits
