@@ -1,4 +1,4 @@
-# Git -> Pivotal Tracker integration
+# Git &#8614; Pivotal Tracker integration
 
 ## Setup
 
