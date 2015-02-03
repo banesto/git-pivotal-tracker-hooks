@@ -37,6 +37,11 @@ It is also possible to assign multiple stories to a commit:
 
 More info can be found [here](https://www.pivotaltracker.com/help/api/rest/v5#Source_Commits)
 
+## TODOs
+
+1. If branch name contains story ID then add it to message so that there's no need to add story ID constantly to each message if whole branch is dedicated to specific story
+2. Don't send request to API if there's no story ID within commit message
+
 ## Credits
 
 Heavily influenced by [Tomasz Pewinski](http://pewniak747.info/2012/04/10/pivotaltracker-git-post-receive-hook/)
