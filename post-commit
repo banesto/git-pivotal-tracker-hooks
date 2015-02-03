@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
+require 'net/http'
+require 'nokogiri'
+
+class GitLogs
+  attr_accessor :raw_log, :logs
+  def initialize
+    self.raw_log = `git log --no-color --format=short -1`.force_encoding('utf-8')
+    self.logs = []
+    parse!
+    self
+  end
+
+  def parse!
+    regexp = /commit\ (.*)\nAuthor:\ (.*)\n\n\s*(.*)/i
+    raw_log.scan(regexp).to_a.each do |match|
+      self.logs << GitLog.new(match[0], match[1], match[2])
+    end
+  end
+
+  def pivotal_sync!
+    Pivotal.new(logs.reverse).send!
+  end
+end
+
+class GitLog
+  attr_accessor :raw_log, :hash, :author, :message
+  def initialize hash, author, message
+    self.hash = hash
+    self.author = author
+    self.message = message
+  end
+
+  def to_xml
+    Nokogiri::XML::Builder.new do |xml|
+      xml.source_commit {
+        xml.commit_id self.hash
+        xml.author self.author
+        xml.message self.message
+      }
+    end.to_xml
+  end
+end
+
+class Pivotal
+  attr_accessor :git_logs, :tracker_token
+  BASE_URI = URI('http://www.pivotaltracker.com/')
+  def initialize git_logs
+    self.git_logs = git_logs
+    self.tracker_token = get_token
+  end
+
+  def get_token
+    `git config --get pivotal.token`.strip
+  end
+
+  def send!
+    Net::HTTP.start(BASE_URI.host) do |http|
+      git_logs.each do |git_log|
+        request = Net::HTTP::Post.new('/services/v3/source_commits')
+        request['X-TrackerToken'] = tracker_token
+        request['Content-type'] = 'application/xml'
+        request.body = git_log.to_xml
+        response = http.request(request)
+      end
+    end
+  end
+end
+
+GitLogs.new().pivotal_sync!
