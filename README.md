@@ -39,8 +39,12 @@ More info can be found [here](https://www.pivotaltracker.com/help/api/rest/v5#So
 
 ## TODOs
 
-1. If branch name contains story ID then add it to message so that there's no need to add story ID constantly to each message if whole branch is dedicated to specific story
-2. Don't send request to API if there's no story ID within commit message
+1. Don't send request to API if there's no story ID within commit message.
+
+## Changelog
+
+* Update to Pivotal Tracker API v5.
+* If branch name contains story ID then add it to message so that there's no need to add story ID constantly to each message if whole branch is dedicated to specific story.
 
 ## Credits
 
