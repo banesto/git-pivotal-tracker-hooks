@@ -13,7 +13,11 @@ You can verify that config parameter is correct by running:
 
 ##### 2. Add 'post-commit' file to project git hooks folder
 
-Put `post-commit` file into your project's `.git/hooks` folder. Of course you can assign the same code to different git hook. In this case rename `post-commit` to appropriate name. Read more about git hooks [here](https://www.atlassian.com/git/tutorials/git-hooks).
+The best way is to clone this repositary and then create symlink in your project's `.git/hooks` folder:
+
+    ln -s ~/Projects/git-pivotal-tracker-hooks/post-commit ~/Projects/<project_name>/.git/hooks/post-commit
+
+Another way is just to put `post-commit` file into your project's `.git/hooks` folder. Of course you can assign the same code to different git hook. In this case rename `post-commit` to appropriate name. Read more about git hooks [here](https://www.atlassian.com/git/tutorials/git-hooks).
 
 ## Usage
 
