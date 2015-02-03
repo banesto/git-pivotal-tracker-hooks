@@ -7,7 +7,7 @@ require 'json'
 class GitLogs
   attr_accessor :raw_log, :commit_data
   def initialize
-    self.raw_log = `git log --no-color --format='Commit: %H%nAuthor: %aN <%aE>%nMessage: %s%nRefs: %d' -1`.force_encoding('utf-8')
+    self.raw_log = `git log --no-color --format='Commit: %h%nAuthor: %aN <%aE>%nMessage: %s%nRefs: %d' -1`.force_encoding('utf-8')
     parse!
     self
   end
