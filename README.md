@@ -2,6 +2,7 @@
 
 ## Setup
 
+##### 1. Get Pivotal Tracker API token and add it to git config
 In order to use Git &#8614; Pivotal Tracker integration, you have to obtain your Pivotal Tracker API token. It could be found on your Pivotal Tracker profile page at the very bottom. Once you have that, add it to you Git project:
 
     git config pivotal.token {your-pivotal-tracker-token}
@@ -9,6 +10,10 @@ In order to use Git &#8614; Pivotal Tracker integration, you have to obtain your
 You can verify that config parameter is correct by running:
 
     git config --get pivotal.token
+
+##### 2. Add 'post-commit' file to project git hooks folder
+
+Put `post-commit` file into your project's `.git/hooks` folder. Of course you can assign the same code to different git hook. In this case rename `post-commit` to appropriate name. Read more about git hooks [here](https://www.atlassian.com/git/tutorials/git-hooks).
 
 ## Usage
 
