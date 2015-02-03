@@ -1,5 +1,7 @@
 # Git &#8614; Pivotal Tracker integration
 
+With this post-commit hook you will be able to add commits to your Pivotal Tracker account project stories as well as automatically starting, finishing and delivering them by making a git commit.
+
 ## Setup
 
 ##### 1. Get Pivotal Tracker API token and add it to git config
@@ -21,6 +23,8 @@ Another way is just to put `post-commit` file into your project's `.git/hooks` f
 
 ## Usage
 
+##### 1. Add story ID to specific commits
+
 A `post-commit` git hook that sends data to Pivotal Tracker about commit. If story Id is specified in commit message in square brackets:
 
     [#85421170] Bug in Internet Explorer
@@ -35,11 +39,22 @@ It is also possible to assign multiple stories to a commit:
 
     [#12345677 #12345678] Ultimate bugfix
 
+##### 2. Add story ID to feature branch name
+
+A more approriate way to proceed is to reference story ID in the branch name so that all commits to given branch will be connected to specific Pivotal Tracker story. In order to do so you just have to mention story ID in the branch name with a hash in the beginning. Valid branch names look like this:
+
+    feature/#85421170-some-crazy-feature
+    feature/super-stuff-#85421170
+    #85421170_version_upgrade
+
+If branch name has a story ID in it and you add another story ID to a commit then both story IDs will be kept. This way you can pass additional parameters for example finish a story just by specifying `[finish]`.
+
 More info can be found [here](https://www.pivotaltracker.com/help/api/rest/v5#Source_Commits)
 
 ## TODOs
 
 1. Don't send request to API if there's no story ID within commit message.
+2. Remove possible duplicate story IDs when branch has the same story ID as in a commit.
 
 ## Changelog
 
