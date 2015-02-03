@@ -24,6 +24,6 @@ If you want to mark story as delivered, include `delivers` besides story ID.
 
 More info can be found [here](https://www.pivotaltracker.com/help/api/rest/v5#Source_Commits)
 
-## Creadits
+## Credits
 
 Heavily influenced by [Tomasz Pewinski](http://pewniak747.info/2012/04/10/pivotaltracker-git-post-receive-hook/)
