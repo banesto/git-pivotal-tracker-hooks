@@ -2,9 +2,14 @@
 
 With this post-commit hook you will be able to add commits to your Pivotal Tracker account project stories as well as automatically starting, finishing and delivering them by making a git commit.
 
+## Requirements
+
+Ruby must be installed.
+
 ## Setup
 
 ##### 1. Get Pivotal Tracker API token and add it to git config
+
 In order to use Git &#8614; Pivotal Tracker integration, you have to obtain your Pivotal Tracker API token. It could be found on your Pivotal Tracker profile page at the very bottom. Once you have that, add it to you Git project:
 
     git config pivotal.token {your-pivotal-tracker-token}
@@ -55,6 +60,7 @@ More info can be found [here](https://www.pivotaltracker.com/help/api/rest/v5#So
 
 1. Don't send request to API if there's no story ID within commit message.
 2. Remove possible duplicate story IDs when branch has the same story ID as in a commit.
+3. Add comment "Merged into <branch>" to Pivotal Tracker story when merging to `develop`, `master`, `qa` branches.
 
 ## Changelog
 
