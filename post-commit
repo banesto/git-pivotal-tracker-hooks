@@ -28,8 +28,14 @@ class GitLogs
   end
 
   def pivotal_sync!
-    Pivotal.new(commit_data).send!
+    Pivotal.new(commit_data).send! if commit_has_story_id?
   end
+
+  def commit_has_story_id?
+    # somewhere between square brackets there has to be a hash followed by multiple digits
+    !commit_data.message.scan(/\[*+\#(\d+)\D?(.*)\]/).empty?
+  end
+
 end
 
 class GitLog

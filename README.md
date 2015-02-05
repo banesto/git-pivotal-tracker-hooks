@@ -58,14 +58,14 @@ More info can be found [here](https://www.pivotaltracker.com/help/api/rest/v5#So
 
 ## TODOs
 
-1. Don't send request to API if there's no story ID within commit message.
-2. Remove possible duplicate story IDs when branch has the same story ID as in a commit.
-3. Add comment "Merged into <branch>" to Pivotal Tracker story when merging to `develop`, `master`, `qa` branches.
+1. Remove possible duplicate story IDs when branch has the same story ID as in a commit.
+2. Add comment "Merged into <branch>" to Pivotal Tracker story when merging to `develop`, `master`, `qa` branches (check also cherry-picks).
 
 ## Changelog
 
-* Update to Pivotal Tracker API v5.
+* Don't send request to API if there's no story ID within commit message.
 * If branch name contains story ID then add it to message so that there's no need to add story ID constantly to each message if whole branch is dedicated to specific story.
+* Update to Pivotal Tracker API v5.
 
 ## Credits
 
