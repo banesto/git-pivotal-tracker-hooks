@@ -65,7 +65,7 @@ class GitLog
   def ids_from_refs
     ref_array = refs.split(',')
     ref_array.inject([]) do |result, ref|
-      id = ref.scan(/\#(.\d+)\D/i).flatten
+      id = ref.scan(/\#(\d+)\D/i).flatten
       result << "##{id.first}" unless id.empty?
       result
     end.flatten
