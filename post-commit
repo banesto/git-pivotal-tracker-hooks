@@ -64,10 +64,10 @@ class GitLog
 
   def ids_from_refs
     ref_array = refs.split(',')
-    ref_array.each_with_object([]) do |result, ref|
+    ref_array.each_with_object([]) do |ref|
       id = ref.scan(/\#(\d+)/).flatten
-      result << "##{id.first}" unless id.empty?
-      result
+      ref << "##{id.first}" unless id.empty?
+      ref
     end.flatten.uniq
   end
 
